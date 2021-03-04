@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.Configurations;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace Entities
 
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<Student> Student { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new TeacherConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentConfiguration());
+        }
 
     }
 }
