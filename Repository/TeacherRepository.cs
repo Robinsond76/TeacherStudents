@@ -16,6 +16,11 @@ namespace Repository
         {
         }
 
+        public void AddTeacher(Teacher teacher)
+        {
+            Create(teacher);
+        }
+
         public async Task<IEnumerable<Teacher>> GetAllTeachers(bool trackChanges)
         {
             return await FindAll(trackChanges)

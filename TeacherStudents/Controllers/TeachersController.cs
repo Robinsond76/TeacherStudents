@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace TeacherStudents.Controllers
                 return Ok(_mapper.Map<IEnumerable<TeacherDto>>(teachers));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "TeacherById")]
         public async Task<IActionResult> GetTeacher(Guid id)
         {
             var teacher = await _repository.Teacher.GetTeacher(id, trackChanges: false);
@@ -45,6 +46,24 @@ namespace TeacherStudents.Controllers
             }
             
             return Ok(_mapper.Map<TeacherDto>(teacher));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTeacher([FromBody] TeacherForCreationDto teacher)
+        {
+            if (teacher == null)
+            {
+                _logger.LogError("TeacherForCreationDto object from client is null.");
+                return NotFound();
+            }
+
+            var teacherEntity = _mapper.Map<Teacher>(teacher);
+            _repository.Teacher.AddTeacher(teacherEntity);
+            await _repository.Save();
+
+            //return newly created entity as dto
+            var teacherDto = _mapper.Map<TeacherDto>(teacherEntity);
+            return CreatedAtRoute("TeacherById", new { id = teacherDto.Id }, teacherDto);
         }
     }
 }

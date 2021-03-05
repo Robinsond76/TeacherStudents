@@ -16,15 +16,22 @@ namespace Repository
         {
         }
 
-        public async Task<Student> GetStudent(Guid id, bool trackChanges)
+        public void AddStudent(Guid teacherId, Student student)
         {
-            return await FindByCondition(s => s.Id.Equals(id), trackChanges)
+            student.TeacherId = teacherId;
+            Create(student);
+        }
+
+        public async Task<Student> GetStudent(Guid teacherId, Guid id, bool trackChanges)
+        {
+            return await FindByCondition(s => s.TeacherId.Equals(teacherId) 
+                                              && s.Id.Equals(id), trackChanges)
                             .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetStudents(bool trackChanges)
+        public async Task<IEnumerable<Student>> GetStudents(Guid teacherId, bool trackChanges)
         {
-            return await FindAll(trackChanges)
+            return await FindByCondition(s => s.TeacherId.Equals(teacherId), trackChanges)
                             .OrderBy(s => s.FirstName)
                             .ToListAsync();
         }

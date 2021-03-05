@@ -11,5 +11,6 @@ namespace Contracts
     {
         Task<IEnumerable<Teacher>> GetAllTeachers(bool trackChanges);
         Task<Teacher> GetTeacher(Guid id, bool trackChanges);
+        void AddTeacher(Teacher teacher);
     }
 }
