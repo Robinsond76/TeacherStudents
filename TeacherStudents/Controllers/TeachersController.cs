@@ -1,4 +1,6 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,14 @@ namespace TeacherStudents.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public TeachersController(IRepositoryManager repository, ILoggerManager logger)
+        public TeachersController(IRepositoryManager repository, ILoggerManager logger,
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -28,7 +33,7 @@ namespace TeacherStudents.Controllers
             {
                 var teachers = await _repository.Teacher.GetAllTeachers(trackChanges: false);
 
-                return Ok(teachers);
+                return Ok(_mapper.Map<IEnumerable<TeacherDto>>(teachers));
             }
             catch (Exception ex)
             {
