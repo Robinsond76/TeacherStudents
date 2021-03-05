@@ -10,5 +10,6 @@ namespace Contracts
     public interface ITeacherRepository
     {
         Task<IEnumerable<Teacher>> GetAllTeachers(bool trackChanges);
+        Task<Teacher> GetTeacher(Guid id, bool trackChanges);
     }
 }

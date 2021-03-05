@@ -22,5 +22,11 @@ namespace Repository
                             .OrderBy(t => t.FirstName)
                             .ToListAsync();
         }
+
+        public async Task<Teacher> GetTeacher(Guid id, bool trackChanges)
+        {
+            return await FindByCondition(t => t.Id.Equals(id), trackChanges)
+                    .SingleOrDefaultAsync();
+        }
     }
 }

@@ -33,5 +33,18 @@ namespace TeacherStudents.Controllers
 
                 return Ok(_mapper.Map<IEnumerable<TeacherDto>>(teachers));
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTeacher(Guid id)
+        {
+            var teacher = await _repository.Teacher.GetTeacher(id, trackChanges: false);
+            if (teacher == null)
+            {
+                _logger.LogInfo($"Teacher with id: {id} doesn't exist in Database.");
+                return NotFound();
+            }
+            
+            return Ok(_mapper.Map<TeacherDto>(teacher));
+        }
     }
 }
