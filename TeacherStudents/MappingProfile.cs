@@ -16,6 +16,11 @@ namespace TeacherStudents
             CreateMap<Teacher, TeacherDto>()
                 .ForMember(t => t.Name, option =>
                     option.MapFrom(x => string.Join(" ", x.FirstName, x.LastName)));
+
+            CreateMap<Student, StudentDto>()
+                .ForMember(s => s.Name, option =>
+                option.MapFrom(x => string.Join(" ", x.FirstName, x.LastName)));
+                
         }
     }
 }
