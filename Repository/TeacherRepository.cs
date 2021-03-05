@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace Repository
         public TeacherRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
         }
-        
+
+        public async Task<IEnumerable<Teacher>> GetAllTeachers(bool trackChanges)
+        {
+            return await FindAll(trackChanges)
+                            .OrderBy(t => t.FirstName)
+                            .ToListAsync();
+        }
     }
 }
