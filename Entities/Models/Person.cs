@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-    public class Person
+    public abstract class Person
     {
         [Required(ErrorMessage = "First name is a required field.")]
         [MaxLength(20, ErrorMessage = "Maximum length for First Name is 20 characters.")]
