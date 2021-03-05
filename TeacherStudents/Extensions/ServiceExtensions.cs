@@ -49,6 +49,8 @@ namespace TeacherStudents.Extensions
         //Repo Manager
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-                        
+              
+        //
+
     }
 }

@@ -29,19 +29,9 @@ namespace TeacherStudents.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTeachers()
         {
-            try
-            {
                 var teachers = await _repository.Teacher.GetAllTeachers(trackChanges: false);
 
                 return Ok(_mapper.Map<IEnumerable<TeacherDto>>(teachers));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong in the {nameof(GetTeachers)} action {ex} ");
-                return StatusCode(500, "Internal server error");
-            }
-
-
         }
     }
 }
